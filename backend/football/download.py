@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from football.driver import APIFootball, KEY
+from football.driver import APIFootball
 from football.models import League, Fixture, Team
  
-api = APIFootball(KEY)
+api = APIFootball()
 
 def download_leagues(season):
     leagues = api.get_season_leagues(season).json()["api"]["leagues"]

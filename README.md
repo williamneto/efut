@@ -4,7 +4,7 @@ Desafio de criar uma aplicação de quiz futebolístico. Usando dados de resulta
 
 Neste quiz a máquina fará perguntas como: "Quem foi o último campeão do Campeonato Brasileiro?", "Quantos jogos o flamengo ganhou este ano?" ao usuário, que irá ganhar ou perder pontos de acordo com as respostas
 
-# Dados
+## Dados
 
 O [RapidAPI](https://rapidapi.com/) é um site que reúne diversas APIs (as mais diversas) onde você pode se cadastrar e usa-las. 
 
