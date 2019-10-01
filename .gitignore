@@ -1,0 +1,4 @@
+backend/backend/__pycache__/
+backend/backend/local_settings.py
+backend/football/__pycache__/
+backend/football/migrations/
