@@ -4,3 +4,5 @@ backend/football/__pycache__/
 backend/football/migrations/
 backend/questions/__pycache__/
 backend/questions/migrations/
+backend/webapp/__pycache__/
+backend/webapp/migrations/
