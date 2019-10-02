@@ -6,3 +6,5 @@ backend/questions/__pycache__/
 backend/questions/migrations/
 backend/webapp/__pycache__/
 backend/webapp/migrations/
+backend/users/__pycache__/
+backend/users/migrations/

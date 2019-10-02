@@ -30,6 +30,17 @@ class Question(Model):
     def __str__(self):
         return self.statement
     
+    def expose(self):
+        obj = {
+            "question_id": self.id,
+            "statement": self.statement,
+            "hint": self.hint,
+            "type": self.type,
+            "dificulty": self.dificulty
+        }
+
+        return obj
+        
     def to_json(self):
         data = {
             "id": self.id,

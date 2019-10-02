@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'django_mysql',
     'football',
     'questions',
-    'webapp'
+    'webapp',
+    'users'
 ]
 
 MIDDLEWARE = [
