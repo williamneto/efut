@@ -9,7 +9,7 @@ from users.models import User
 # /answer - receive a username and a answer and return if right or wrong
 
 class QuestionView(APIViewMixin):
-    post_services = ("get_question", )
+    post_services = ("get_question", "answer_question")
     get_services = ("get_question", )
     model = Question
 
@@ -46,6 +46,40 @@ class QuestionView(APIViewMixin):
         else:
             response["message"] = "Not enough parameters"
 
+        return response
+    
+    def _answer_question(self, data):
+        response =  {}
 
+        username = data.get("username")
+        question_id = data.get("question_id")
+        user_answer = data.get("answer")
+        if username and question_id and user_answer:
+            question = self.model.objects.get(id=question_id)
+            user = User.objects.all().filter(
+                username=username
+            )[0]
+            answered = user.answered
+            if not question.id in answered["questions"]:
+                if question.answer == user_answer:
+                    answered["count"] += 1
+                    answered["questions"].append(question.id)
+                    user.answered = answered
+                    user.points += 10
+                    user.save()
+
+                    response["correct"] = True
+                    response["user_points"] = user.points
+                else:
+                    if user.points >= 10:
+                        user.points -= 5
+                        user.save()
+
+                    response["correct"] = False
+                    response["points"] = user.points
+
+        else:
+            response["message"] = "Not enough parameters"
+        
         return response
         
