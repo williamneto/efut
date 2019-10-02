@@ -32,7 +32,7 @@ class League(models.Model):
     is_current = models.IntegerField()
 
     def __str__(self):
-        return "%s - %s" % (self.name, self.country)
+        return "%s - %s" % (self.name, self.season)
     
     def to_json(self):
         data = {
@@ -77,6 +77,11 @@ class Team(models.Model):
 class Fixture(models.Model):
     fixture_id = models.IntegerField()
     league_id = models.IntegerField()
+    league_ref = models.ForeignKey(
+        League,
+        on_delete=models.SET_NULL,
+        null=True
+    )
     event_date = models.DateTimeField()
     event_timestamp = models.IntegerField()
     round = models.CharField(

@@ -49,51 +49,57 @@ def download_country_fixtures(country, season):
             
             for f in league_fixtures:
                 # Start a fixture object
-                f_obj = Fixture(
+                f_query = Fixture.objects.all().filter(
                     fixture_id=f["fixture_id"],
-                    league_id=f["league_id"],
-                    event_date=f["event_date"],
-                    event_timestamp=f["event_timestamp"],
-                    round=f["round"],
-                    status=f["status"],
-                    venue=f["venue"],
-                    goals_home_team=f["goalsHomeTeam"],
-                    goals_away_team=f["goalsAwayTeam"]
+                    event_timestamp=f["event_timestamp"]
                 )
-
-                # Lets check if there is a team with this name
-                home_team_query = Team.objects.all().filter(
-                    name=f["homeTeam"]["team_name"]
-                )
-                if len(home_team_query) == 0:
-                    home_team = Team(
-                        team_id=f["homeTeam"]["team_id"],
-                        name=f["homeTeam"]["team_name"],
-                        logo=f["homeTeam"]["logo"]
+                if len(f_query) == 0:
+                    f_obj = Fixture(
+                        fixture_id=f["fixture_id"],
+                        league_id=f["league_id"],
+                        league_ref=l,
+                        event_date=f["event_date"],
+                        event_timestamp=f["event_timestamp"],
+                        round=f["round"],
+                        status=f["status"],
+                        venue=f["venue"],
+                        goals_home_team=f["goalsHomeTeam"],
+                        goals_away_team=f["goalsAwayTeam"]
                     )
-                    home_team.save()
-                else:
-                    home_team = home_team_query[0]
-                
-                away_team_query = Team.objects.all().filter(
-                    name=f["awayTeam"]["team_name"]
-                )
-                if len(away_team_query) == 0:
-                    away_team = Team(
-                        team_id=f["awayTeam"]["team_id"],
-                        name=f["awayTeam"]["team_name"],
-                        logo=f["awayTeam"]["logo"]
-                    )
-                    away_team.save()
-                else:
-                    away_team = away_team_query[0]
-                
-                # Save home_team and away_team
-                f_obj.home_team = home_team
-                f_obj.away_team = away_team
-                f_obj.save()
 
-                print(">>>> Salvo partida:  %s" % f_obj.__str__())
+                    # Lets check if there is a team with this name
+                    home_team_query = Team.objects.all().filter(
+                        name=f["homeTeam"]["team_name"]
+                    )
+                    if len(home_team_query) == 0:
+                        home_team = Team(
+                            team_id=f["homeTeam"]["team_id"],
+                            name=f["homeTeam"]["team_name"],
+                            logo=f["homeTeam"]["logo"]
+                        )
+                        home_team.save()
+                    else:
+                        home_team = home_team_query[0]
+                    
+                    away_team_query = Team.objects.all().filter(
+                        name=f["awayTeam"]["team_name"]
+                    )
+                    if len(away_team_query) == 0:
+                        away_team = Team(
+                            team_id=f["awayTeam"]["team_id"],
+                            name=f["awayTeam"]["team_name"],
+                            logo=f["awayTeam"]["logo"]
+                        )
+                        away_team.save()
+                    else:
+                        away_team = away_team_query[0]
+                    
+                    # Save home_team and away_team
+                    f_obj.home_team = home_team
+                    f_obj.away_team = away_team
+                    f_obj.save()
+
+                    print(">>>> Salvo partida:  %s" % f_obj.__str__())
 
     else:
         print("Impossível baixar")

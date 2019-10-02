@@ -8,5 +8,14 @@ class LeagueAdmin(admin.ModelAdmin):
     search_fields = ("name", "country", "country_code", "league_id")
 admin.site.register(League, LeagueAdmin)
 
-admin.site.register(Fixture)
-admin.site.register(Team)
+class FixtureAdmin(admin.ModelAdmin):
+    list_display = ("__str__", "league_ref")
+    list_filter = ("league_ref", "venue")
+    search_fields = ("season", )
+admin.site.register(Fixture, FixtureAdmin)
+
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ("name", )
+    search_fields = ("name", )
+admin.site.register(Team, TeamAdmin)
+
