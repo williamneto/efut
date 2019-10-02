@@ -8,3 +8,6 @@ backend/webapp/__pycache__/
 backend/webapp/migrations/
 backend/users/__pycache__/
 backend/users/migrations/
+
+frontend/node_modules/
+frontend/package-lock.json
