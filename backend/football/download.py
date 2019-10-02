@@ -35,6 +35,19 @@ def download_leagues(season):
             league_objs.append(l_obj.to_json())
             print(">>> Salvo liga %s - %s" % (l["name"], l["season"]))
 
+def update_teams_data():
+    teams_objs = Team.objects.all()
+    print("***** Baixando dados de %s times" % str(len(teams_objs)))
+    for team_obj in teams_objs:
+        data = api.get_team_data(team_obj.team_id)
+
+        team_obj.country = data["country"]
+        team_obj.founded = data["founded"]
+        team_obj.venue_name = data["venue_name"]
+        team_obj.venue_city = data["venue_city"]
+        team_obj.save()
+        print(">>>> Atualizados dados de: %s" % team_obj.name)
+
 def download_country_fixtures(country, season):
     leagues_query = League.objects.all().filter(
         country=country,

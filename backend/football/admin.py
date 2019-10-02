@@ -15,7 +15,7 @@ class FixtureAdmin(admin.ModelAdmin):
 admin.site.register(Fixture, FixtureAdmin)
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ("name", )
-    search_fields = ("name", )
+    list_display = ("name", "venue_city", "venue_name", "founded")
+    search_fields = ("name", "venue_city", "venue_name")
 admin.site.register(Team, TeamAdmin)
 

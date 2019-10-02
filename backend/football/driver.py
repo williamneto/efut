@@ -75,3 +75,13 @@ class APIFootball:
         response = requests.get(url, headers=self.headers).json()
 
         return response
+    
+    # Get data from one team
+    def get_team_data(self, team_id):
+        url = "%s/teams/team/%s/" % (
+            self.host,
+            team_id
+        )
+        response = requests.get(url, headers=self.headers).json()["api"]["teams"][0]
+
+        return response

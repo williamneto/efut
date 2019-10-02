@@ -57,6 +57,21 @@ class Team(models.Model):
     name = models.CharField(
         max_length=300
     )
+    country = models.CharField(
+        max_length=300,
+        null=True
+    )
+    founded = models.IntegerField(
+        null=True
+    )
+    venue_name = models.CharField(
+        max_length=300,
+        null=True
+    )
+    venue_city = models.CharField(
+        max_length=300,
+        null=True
+    )
     logo = models.CharField(
         max_length=600
     )
@@ -69,6 +84,10 @@ class Team(models.Model):
             "id": self.id,
             "team_id": self.team_id,
             "name": self.name,
+            "country": self.country,
+            "founded": self.founded,
+            "venue_name": self.venue_name,
+            "venue_city": self.venue_city,
             "logo": self.logo
         }
 
