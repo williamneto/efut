@@ -22,3 +22,13 @@ def create_relational_questions():
 
                 question.save()
                 print(">>>> Salva pergunta '%s'" % question.statement)
+
+def set_questions_dificulty():
+    for question in Question.objects.all():
+        if question.type == "0":
+            team_id = question.origin["team_id"]
+            team = Team.objects.get(id=team_id)
+
+            question.dificulty = team.popularity
+            question.save()
+            print(">>>> Salva dificuldade %s para pergunta '%s'" % (str(question.dificulty), question.statement))

@@ -23,6 +23,9 @@ class Question(Model):
         choices=QUESTION_TYPES
     )
     origin = JSONField()
+    dificulty = models.IntegerField(
+        null=True
+    )
 
     def __str__(self):
         return self.statement

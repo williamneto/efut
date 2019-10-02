@@ -75,6 +75,9 @@ class Team(models.Model):
     logo = models.CharField(
         max_length=600
     )
+    popularity = models.IntegerField(
+        null=True
+    )
 
     def __str__(self):
         return self.name
@@ -148,3 +151,4 @@ class Fixture(models.Model):
         }
 
         return data
+
