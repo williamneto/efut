@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import "./question.css"
 
-import Option from "./option"
 
 export default props => {
-    //alert(props.question.type)
     if (props.question.type == "0") {
         if (props.question.hint) {
             var logo = true
@@ -23,7 +21,7 @@ export default props => {
                 </div>
                 <div className="options row">
                     {props.options.map(option =>(
-                        <div className="col-sm-4 option">
+                        <div className="col-sm-4 option" onClick={() => props.sendAnswer(option)}>
                             {option}
                         </div>
                     ))}

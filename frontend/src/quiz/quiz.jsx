@@ -16,6 +16,7 @@ export default class Quiz extends Component {
         }
 
         this.getQuestion = this.getQuestion.bind(this)
+        this.sendAnswer = this.sendAnswer.bind(this)
 
         if (localStorage.getItem("username")) {
             var username = localStorage.getItem("username")
@@ -23,7 +24,7 @@ export default class Quiz extends Component {
 
             this.getQuestion()
         } else {
-            this.props.history.push("/login")
+            this.props.history.push("/")
         }
     }
 
@@ -39,17 +40,34 @@ export default class Quiz extends Component {
         })
 
         if (response) {
-            //alert(response.data.question)
             this.setState({ 
                 "question" : response.data.question, 
                 "options": response.data.options
             })
-            console.log(this.state)
         }
     }
 
-    sendAnswer(user_answer) {
-        alert(user_answer)
+    async sendAnswer(user_answer) {
+        var data = {
+            "cmd": "answer_question",
+            "username": this.state.username,
+            "question_id": this.state.question.question_id,
+            "answer": user_answer
+        }
+        let response = await axios({
+            method: "post",
+            url: `${API_HOST}/question/`,
+            data: qs.stringify(data)
+        })
+        if (response) {
+            if (response.data.correct) {
+                alert("Acertou!")
+            } else {
+                alert("Errou!")
+            }
+        }
+
+        this.getQuestion()
     }
 
     render() {

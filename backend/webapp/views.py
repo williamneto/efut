@@ -48,7 +48,7 @@ class QuestionView(APIViewMixin):
                     origin = picked.origin
                     question_team = Team.objects.get(id=origin["team_id"])
                     
-                    option_teams = random.sample(list(Team.objects.filter(~Q(id=question_team.id))), 2)
+                    option_teams = random.sample(list(Team.objects.filter()), 2)
                     options = [picked.answer]
                     for t in option_teams:
                         if origin["field"] == "logo":
