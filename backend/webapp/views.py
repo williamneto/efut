@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import random
 from django.http import JsonResponse
+from django.db.models import Q
 from webapp.mixins import APIViewMixin
+from football.models import Team
 from questions.models import Question
 from users.models import User
 
@@ -41,8 +43,23 @@ class QuestionView(APIViewMixin):
                 picked = random.sample(list(all_questions), 1)[0]
                 if not picked.id in answered["questions"]:
                     keep = True
-                
-                response = picked.expose()
+
+                if picked.type == "0":
+                    origin = picked.origin
+                    question_team = Team.objects.get(id=origin["team_id"])
+                    
+                    option_teams = random.sample(list(Team.objects.filter(~Q(id=question_team.id))), 2)
+                    options = [picked.answer]
+                    for t in option_teams:
+                        if origin["field"] == "logo":
+                            options.append(t.name)
+                        else:
+                            options.append(t.to_json()[origin["field"]])
+                    
+                    response = { 
+                        "question": picked.expose(),
+                        "options": options
+                    }
         else:
             response["message"] = "Not enough parameters"
 

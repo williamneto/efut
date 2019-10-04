@@ -2,6 +2,8 @@
 from django.db import models
 from django_mysql.models import Model, JSONField
 
+from football.models import Team
+
 QUESTION_TYPES = (
     ("0", "Relational"),
     ("1", "Math"),
@@ -29,7 +31,8 @@ class Question(Model):
 
     def __str__(self):
         return self.statement
-    
+
+
     def expose(self):
         obj = {
             "question_id": self.id,
