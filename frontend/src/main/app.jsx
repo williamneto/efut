@@ -1,10 +1,9 @@
 import React from "react"
-import Login from "./login"
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Routes from "./routes"
 
 export default props => (
-    <div className="panel">
-        <h1>efut</h1>
-        <h4>quiz futebolistico</h4>
-        <Login />
+    <div className="container">
+        <Routes />
     </div>
 )
