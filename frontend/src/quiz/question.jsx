@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import "./question.css"
 
-
 export default props => {
     if (props.question.type == "0") {
         if (props.question.hint) {

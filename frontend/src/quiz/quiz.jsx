@@ -12,9 +12,11 @@ export default class Quiz extends Component {
 
         this.state = {
             "username": "",
+            "user_points": 0,
             "question": {}
         }
 
+        this.getUserPoints = this.getUserPoints.bind(this)
         this.getQuestion = this.getQuestion.bind(this)
         this.sendAnswer = this.sendAnswer.bind(this)
 
@@ -27,7 +29,22 @@ export default class Quiz extends Component {
             this.props.history.push("/")
         }
     }
+    
+    async getUserPoints() {
+        var data = {
+            "cmd": "get_user_points",
+            "username": this.state.username
+        }
+        let response = await axios({
+            method: "post",
+            url: `${API_HOST}/user/`,
+            data: qs.stringify(data)
+        })
 
+        if (response) {
+            this.setState({ "user_points": response.data.points})
+        }
+    }
     async getQuestion() {
         var data = {
             "cmd": "get_question",
@@ -44,6 +61,7 @@ export default class Quiz extends Component {
                 "question" : response.data.question, 
                 "options": response.data.options
             })
+            this.getUserPoints()
         }
     }
 
@@ -74,6 +92,9 @@ export default class Quiz extends Component {
         return (
             <div>
                 <Question sendAnswer={this.sendAnswer} question={this.state.question} options={this.state.options} />
+                <div className="user-points">
+                    {this.state.user_points} pontos
+                </div>
             </div>
         )
     }

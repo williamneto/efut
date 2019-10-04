@@ -7,6 +7,22 @@ from football.models import Team
 from questions.models import Question
 from users.models import User
 
+class UserView(APIViewMixin):
+    post_services = ("get_user_points")
+    
+    def _get_user_points(self, data):
+        response = {}
+        username = data.get("username")
+
+        if username:
+            user_query = User.objects.all().filter(
+                username=username
+            )
+            if len(user_query) > 0:
+                response["points"] = user_query[0].points
+        
+        return response
+
 # /question - receive a username and return a question
 # /answer - receive a username and a answer and return if right or wrong
 
@@ -46,7 +62,6 @@ class QuestionView(APIViewMixin):
 
                 if picked.type == "0":
                     origin = picked.origin
-                    question_team = Team.objects.get(id=origin["team_id"])
                     
                     option_teams = random.sample(list(Team.objects.filter()), 2)
                     options = [picked.answer]
