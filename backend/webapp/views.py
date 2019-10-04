@@ -58,7 +58,7 @@ class QuestionView(APIViewMixin):
                     
                     response = { 
                         "question": picked.expose(),
-                        "options": options
+                        "options": random.sample(options, len(options))
                     }
         else:
             response["message"] = "Not enough parameters"

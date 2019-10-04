@@ -21,7 +21,7 @@ class User(Model):
             dificulty = 3
         elif answered_questions <= 30:
             dificulty = 4
-        elif answered_questions <= 40:
+        else:
             dificulty = 5
         
         return dificulty
