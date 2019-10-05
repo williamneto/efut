@@ -7,6 +7,23 @@ from football.models import Team
 from questions.models import Question
 from users.models import User
 
+class RankView(APIViewMixin):
+    post_services = ("get_rank")
+
+    def _get_rank(self, data):
+        response = {
+            "rank": []
+        }
+
+        all_users = User.objects.all().order_by("-points")
+        for user in all_users[:5]:
+            response["rank"].append({
+                "username": user.username,
+                "points": user.points
+            })
+
+        return response
+
 class UserView(APIViewMixin):
     post_services = ("get_user_points")
     

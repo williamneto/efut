@@ -3,6 +3,7 @@ import axios from "axios"
 import qs from "qs"
 import 'babel-polyfill';
 import Question from "./question"
+import Rank from "./rank"
 
 const API_HOST = "http://localhost:8000"
 
@@ -13,9 +14,11 @@ export default class Quiz extends Component {
         this.state = {
             "username": "",
             "user_points": 0,
-            "question": {}
+            "question": {},
+            "rank": []
         }
 
+        this.getRank = this.getRank.bind(this)
         this.getUserPoints = this.getUserPoints.bind(this)
         this.getQuestion = this.getQuestion.bind(this)
         this.sendAnswer = this.sendAnswer.bind(this)
@@ -62,6 +65,7 @@ export default class Quiz extends Component {
                 "options": response.data.options
             })
             this.getUserPoints()
+            this.getRank()
         }
     }
 
@@ -86,6 +90,20 @@ export default class Quiz extends Component {
         }
 
         this.getQuestion()
+        this.getRank()
+    }
+
+    async getRank() {
+        var data = { "cmd": "get_rank" }
+        let response = await axios({
+            method: "post",
+            url: `${API_HOST}/rank/`,
+            data: qs.stringify(data)
+        })
+        if(response) {
+            this.setState({"rank": response.data.rank})
+        }
+
     }
 
     render() {
@@ -95,6 +113,7 @@ export default class Quiz extends Component {
                 <div className="user-points">
                     {this.state.user_points} pontos
                 </div>
+                <Rank rank={this.state.rank} username={this.state.usernae} />
             </div>
         )
     }
